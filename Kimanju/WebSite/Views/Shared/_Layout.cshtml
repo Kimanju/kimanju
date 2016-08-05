@@ -1,0 +1,155 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Kimanju</title>
+  <link rel="icon" type="image/png" href="~/Content/images/favicon.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+  <style>
+        #zenpark {
+            display: none;
+        }
+
+        @@media screen and (min-width: 768px) {
+            #zenpark {
+                display: block;
+            }
+        }
+  </style>
+  <script>
+        var map;
+        var infowindow;
+
+        function initMap() {
+            var zenpark = { lat: 48.869, lng: 2.343 };
+
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: zenpark,
+                zoom: 15
+            });
+
+            infowindow = new google.maps.InfoWindow();
+
+            var service = new google.maps.places.PlacesService(map);
+
+            service.nearbySearch({
+                location: zenpark,
+                radius: 1000,
+                types: ['restaurant', 'food', 'bar', ]
+            }, callback);
+
+            var zenMarker = new google.maps.Marker({
+                map: map,
+                position: zenpark,
+                title: "Zenpark SA",
+                visible: true
+            });
+
+            google.maps.event.addListener(zenMarker, 'click', function() {
+                infowindow.setContent('<span style="color: pink;">Zenpark SA</span>');
+                infowindow.open(map, this);
+            });
+        }
+
+        function callback(results, status) {
+            if (status === google.maps.places.PlacesServiceStatus.OK) {
+                for (var i = 0; i < results.length; i++) {
+                    createMarker(results[i]);
+                }
+            }
+        }
+
+        function createMarker(place) {
+            var placeLoc = place.geometry.location;
+
+            var marker = new google.maps.Marker({
+                map: map,
+                position: place.geometry.location
+            });
+
+            google.maps.event.addListener(marker, 'click', function() {
+                infowindow.setContent(place.name);
+                infowindow.open(map, this);
+            });
+        }
+
+  </script>
+</head>
+<body style="margin: 0; background-color: #f5f5f5;">
+  <div class="container-fluid">
+    <header class="row" style="border-bottom: 1px solid #ddd; box-shadow: #f5f5f5 0px 5px 5px; background-color: white;">
+      <div style="position: relative; width: 100%; max-width: 1000px; margin: auto;">
+        <img class="img-responsive" src="~/Content/images/logo.svg" style="margin: 0 !important; max-height: 150px; margin: auto;" />
+        <img id="zenpark" src="~/Content/images/zenpark.svg" style="height: 40px; position: absolute; right: 30px; bottom: 30px;" />
+      </div>
+
+    </header>
+
+    <div class="container-fluid" style="padding-bottom: 15px; width: 100%; max-width: 1000px; margin: auto; background-color: white; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;">
+      <div id="map" style="width: 100%; min-height: 250px; max-height: 500px; margin-bottom: 10px;"></div>
+      <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#restaurantsMenu">Restaurants</a></li>
+        <li><a data-toggle="tab" href="#groupsMenu">Groupes</a></li>
+      </ul>
+      <div class="tab-content">
+        <div id="restaurantsMenu" class="tab-pane fade in active">
+          <p>Test</p>
+        </div>
+        <div id="groupsMenu" class="tab-pane fade in">
+          <div class="row">
+            <div class="panel-group col-md-8">
+              <h2><small class="glyphicon glyphicon-list"></small> Les groupes de l'équipe</h2>
+              <div class="panel panel-default" style="border: 1px solid #c9cdde; background-color: #f3f8ff; padding: 10px;">
+                <div class="panel-heading" style="position: relative; background-color: #f3f8ff;">
+                  <h2 class="panel-title" style="font-size: 20px; margin: 0px;"><a data-toggle="collapse" href="#group1">Nom du groupe</a> <small style="color: grey;">créé par Utilisateur le 01/01/70 à 00:00</small></h2>
+                  <span class="label label-success">Imminent</span>
+                  <span class="label label-default">Italien</span>
+                  <span class="label label-default">Petit commité</span>
+                  <span class="label label-default">Loin</span>
+                </div>
+                <div id="group1" class="panel-collapse collapse">
+                  <div class="panel-body">
+                    <p>Commentaires à propos du groupe de repas (détails, remarques, ...)</p>
+                    <div>
+                      <button type="text" class="btn btn-sm" style="border-color: #d09d67; background-color: #ffba6b; color: white;"><span class="glyphicon glyphicon-thumbs-up"></span> Rejoindre</button>
+                    </div>
+                  </div>
+                  <div class="panel-footer" style="border: 1px solid #c9cdde; background-color: white;">
+                    <div title="Utilisateur 1" style="text-align: center; color: white; width: 30px;height: 30px;background-color: #6D94A1;border-radius: 15px;padding-top: 5px; display: inline-block;">U</div>
+                    <div title="Utilisateur 2" style="text-align: center; color: white; width: 30px;height: 30px;background-color: #6DA187;border-radius: 15px;padding-top: 5px; display: inline-block;">U</div>
+                    <div title="Utilisateur 3" style="text-align: center; color: white; width: 30px;height: 30px;background-color: #CCAF52;border-radius: 15px;padding-top: 5px; display: inline-block;">U</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <h2><small class="glyphicon glyphicon-plus-sign"></small> Créer un groupe</h2>
+              <form>
+                <fieldset class="form-group">
+                  <label for="groupName">Nom</label>
+                  <input type="text" class="form-control" id="groupName" placeholder="Le nom du groupe de repas">
+                  <small class="text-muted">Un nom attirant n'apportera pas forcément de reconnaissance éternelle.</small>
+                </fieldset>
+                <fieldset class="form-group">
+                  <label for="groupComment">Commentaires</label>
+                  <textarea class="form-control" id="groupComment" rows="3" placeholder="Des détails supplémentaires, des anecdotes de Nagui, etc..."></textarea>
+                </fieldset>
+                <button type="submit" class="btn btn-default" style="border-color: #d09d67; background-color: #ffba6b; color: white;">Créer</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer class="row" style="margin-top: 10px;">
+      <p style="text-align: center; font-family: sans-serif; color: #ffba6b;">&copy; Zenpark - 2016</p>
+    </footer>
+  </div>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script src="~/scripts/jquery-1.10.2.min.js"></script>
+  <script src="~/scripts/bootstrap.min.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRRIKh1K0YXZR61mln-nz2yg0YtJklZlk&signed_in=true&libraries=places&callback=initMap" async defer></script>
+  @RenderBody();
+</body>
+</html>
