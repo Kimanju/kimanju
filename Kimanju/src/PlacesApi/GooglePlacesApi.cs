@@ -55,9 +55,18 @@ namespace PlacesApi
     public async Task<PlaceDetails> GetPlaceDetails(String placeId)
     {
       var response = await GetDataFromGoogle($"/details/output?placeid={placeId}");
-      throw new NotImplementedException();
-
-      //https://maps.googleapis.com/maps/api/place/details/output?parameters
+	  var result = JsonConvert.DeserializeObject<PlaceDetailsApiQueryResponse>(await response.Content.ReadAsStringAsync());
+	  
+	  if (result.result == null)
+		  throw new ArgumentOutOfRangeException("Can't find the details of this place", nameof(placeId));
+	  
+	  return new PlaceDetails()
+	  {
+		PlaceId = result.place_id,
+        Rating = result.rating,
+        PhoneNumber = rating.formatted_phone_number,
+        Address = rating.formatted_address
+	  };
 
     }
   }
