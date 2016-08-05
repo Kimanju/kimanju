@@ -29,6 +29,9 @@ namespace GooglePlacesCLI
         foreach (var resto in restoPasLoins)
         {
           Console.WriteLine(resto.Name);
+
+          var details = gapi.GetPlaceDetails(resto.Id);
+          Console.WriteLine(" Open now ? " + resto.IsOpenNow);
         }
 
         Console.Read();
