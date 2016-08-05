@@ -109,19 +109,19 @@ namespace DataAccessLayer
             }
         }
 
-        //public static async Task<IEnumerable<T>> GetItemsAsync(Expression<Func<T, bool>> predicate)
-        //{
-        //    IDocumentQuery<T> query = client.CreateDocumentQuery<T>(ItemCollectionUri)
-        //        .Where(predicate)
-        //        .AsDocumentQuery();
+        public async Task<IEnumerable<T>> GetItemsAsync<T>(String databaseName, String collectionName, Expression<Func<T, bool>> predicate) where T : class 
+        {
+            IDocumentQuery<T> query = Client.CreateDocumentQuery<T>(UriFactory.CreateDocumentCollectionUri(databaseName, collectionName))
+                .Where(predicate)
+                .AsDocumentQuery();
 
-        //    List<T> results = new List<T>();
-        //    while (query.HasMoreResults)
-        //    {
-        //        results.AddRange(await query.ExecuteNextAsync<T>());
-        //    }
+            List<T> results = new List<T>();
+            while (query.HasMoreResults)
+            {
+                results.AddRange(await query.ExecuteNextAsync<T>());
+            }
 
-        //    return results;
-        //}
+            return results;
+        }
     }
 }
