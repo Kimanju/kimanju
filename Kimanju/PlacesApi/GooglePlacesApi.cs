@@ -9,7 +9,7 @@ using PlacesApi.JsonBindings;
 
 namespace PlacesApi
 {
-  
+
   public class GooglePlacesApi : IPlacesApi
   {
     private const String _apiKey = "AIzaSyCkc8aQYKa224YJ2QzjHDn-weGL1r83iIA";
@@ -55,18 +55,18 @@ namespace PlacesApi
     public async Task<PlaceDetails> GetPlaceDetails(String placeId)
     {
       var response = await GetDataFromGoogle($"/details/output?placeid={placeId}");
-	  var result = JsonConvert.DeserializeObject<PlaceDetailsApiQueryResponse>(await response.Content.ReadAsStringAsync());
-	  
-	  if (result.result == null)
-		  throw new ArgumentOutOfRangeException("Can't find the details of this place", nameof(placeId));
-	  
-	  return new PlaceDetails()
-	  {
-		PlaceId = result.place_id,
-        Rating = result.rating,
-        PhoneNumber = rating.formatted_phone_number,
-        Address = rating.formatted_address
-	  };
+      var result = JsonConvert.DeserializeObject<PlaceDetailsApiQueryResponse>(await response.Content.ReadAsStringAsync());
+
+      if (result.result == null)
+        throw new ArgumentOutOfRangeException("Can't find the details of this place", nameof(placeId));
+
+      return new PlaceDetails()
+      {
+        PlaceId = result.result.place_id,
+        Rating = result.result.rating,
+        PhoneNumber = result.result.formatted_phone_number,
+        Address = result.result.formatted_address
+      };
 
     }
   }
