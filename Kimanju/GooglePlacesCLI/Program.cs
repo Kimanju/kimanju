@@ -28,10 +28,8 @@ namespace GooglePlacesCLI
 
         foreach (var resto in restoPasLoins)
         {
-          Console.WriteLine(resto.Name);
-
-          var details = gapi.GetPlaceDetails(resto.Id);
-          Console.WriteLine(" Open now ? " + resto.IsOpenNow);
+          var details = await gapi.GetPlaceDetails(resto.Id);
+          Console.WriteLine("{0} - {1}, Ouvert: {2}", resto.Name, details.Rating, resto.IsOpenNow);
         }
 
         Console.Read();

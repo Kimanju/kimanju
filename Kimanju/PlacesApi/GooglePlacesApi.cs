@@ -34,7 +34,7 @@ namespace PlacesApi
       do
       {
         var coords = position.Latitude.ToString(CultureInfo.CreateSpecificCulture("en-US")) + "," + position.Longitude.ToString(CultureInfo.CreateSpecificCulture("en-US"));
-        var types = String.Join(",", _defaultSearchTypes);
+        var types = String.Join("|", _defaultSearchTypes);
         var query = $"/nearbysearch/json?location={coords}&radius={_defaultSearchRadius}&types={types}";
         if (apiResponse != null && !String.IsNullOrEmpty(apiResponse.next_page_token))
           query += "&pagetoken=" + apiResponse.next_page_token;
@@ -68,7 +68,7 @@ namespace PlacesApi
 
     public async Task<PlaceDetails> GetPlaceDetails(String placeId)
     {
-      var response = await GetDataFromGoogle($"/details/output?placeid={placeId}");
+      var response = await GetDataFromGoogle($"/details/json?placeid={placeId}");
       var result = JsonConvert.DeserializeObject<PlaceDetailsApiQueryResponse>(await response.Content.ReadAsStringAsync());
 
       if (result.result == null)
