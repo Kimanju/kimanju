@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{0FD13446-F85E-47FA-AE23-DBCB9F4099CE}"
 EndProject
@@ -15,6 +15,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlacesApi", "PlacesApi\PlacesApi.csproj", "{95768322-80B8-435A-AEA9-4F446A48FE04}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GooglePlacesCLI", "GooglePlacesCLI\GooglePlacesCLI.csproj", "{0DD0078F-FE1A-457C-84B4-24166575F334}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSite", "WebSite\WebSite.csproj", "{7EF5EA37-BA65-4D04-A0E6-A604EE115E66}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -34,11 +36,21 @@ Global
 		{0DD0078F-FE1A-457C-84B4-24166575F334}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0DD0078F-FE1A-457C-84B4-24166575F334}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0DD0078F-FE1A-457C-84B4-24166575F334}.Release|Any CPU.Build.0 = Release|Any CPU
+		{841647FA-B494-44C2-BA70-7DC12A3A9270}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{841647FA-B494-44C2-BA70-7DC12A3A9270}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{841647FA-B494-44C2-BA70-7DC12A3A9270}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{841647FA-B494-44C2-BA70-7DC12A3A9270}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7EF5EA37-BA65-4D04-A0E6-A604EE115E66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EF5EA37-BA65-4D04-A0E6-A604EE115E66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EF5EA37-BA65-4D04-A0E6-A604EE115E66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7EF5EA37-BA65-4D04-A0E6-A604EE115E66}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{87E4C6E3-4273-4257-9A6E-90F5F8009364} = {0FD13446-F85E-47FA-AE23-DBCB9F4099CE}
+		{841647FA-B494-44C2-BA70-7DC12A3A9270} = {0FD13446-F85E-47FA-AE23-DBCB9F4099CE}
+		{7EF5EA37-BA65-4D04-A0E6-A604EE115E66} = {0FD13446-F85E-47FA-AE23-DBCB9F4099CE}
 	EndGlobalSection
 EndGlobal
