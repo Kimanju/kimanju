@@ -51,6 +51,7 @@ namespace PlacesApi.JsonBindings
     public List<object> html_attributions { get; set; }
     public List<Result> results { get; set; }
     public string status { get; set; }
+    public String next_page_token { get; set; }
   }
   
   public class DetailResult
