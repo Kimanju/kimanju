@@ -52,4 +52,18 @@ namespace PlacesApi.JsonBindings
     public List<Result> results { get; set; }
     public string status { get; set; }
   }
+  
+  public class DetailResult
+  {
+	  public string formatted_phone_number {get;set;}
+	  public string place_id {get;set;}
+	  public double rating {get;set;}
+	  public string formatted_address {get;set;}
+  }
+  
+  public class PlaceDetailsApiQueryResponse
+  {
+	  public DetailResult result {get;set;}
+  }
 }
+	
