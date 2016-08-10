@@ -1,41 +1,37 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using PlacesApi;
+using Kimanju.PlacesApi;
 
-namespace GooglePlacesCLI
+namespace Kimanju.GooglePlacesCLI
 {
   class Program
   {
-    static void Main(string[] args)
+    static void Main(String[] args)
     {
       Task.Run(async () =>
       {
         IPlacesApi gapi = new GooglePlacesApi();
 
-        Coordinates ici = new Coordinates()
+        var ici = new Coordinates
         {
           Latitude = 48.869194,
           Longitude = 2.343365
         };
         
         var restoPasLoins = await gapi.GetMapData(ici);
+        var restos = restoPasLoins as Place[] ?? restoPasLoins.ToArray();
 
-        Console.WriteLine(restoPasLoins.Count());
+        Console.WriteLine(restos.Length);
 
-
-        foreach (var resto in restoPasLoins)
+        foreach (var resto in restos)
         {
           var details = await gapi.GetPlaceDetails(resto.Id);
-          Console.WriteLine("{0} - {1}, Ouvert: {2}", resto.Name, details.Rating, resto.IsOpenNow);
+          Console.WriteLine($"{resto.Name} - {details.Rating}, Ouvert: {resto.IsOpenNow}");
         }
 
         Console.Read();
-      }).Wait();
- 
+      }).Wait(); 
     }
-    
   }
 }

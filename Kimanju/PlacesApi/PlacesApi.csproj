@@ -7,8 +7,8 @@
     <ProjectGuid>{95768322-80B8-435A-AEA9-4F446A48FE04}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PlacesApi</RootNamespace>
-    <AssemblyName>PlacesApi</AssemblyName>
+    <RootNamespace>Kimanju.PlacesApi</RootNamespace>
+    <AssemblyName>Kimanju.PlacesApi</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

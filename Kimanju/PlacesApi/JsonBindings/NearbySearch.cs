@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace PlacesApi.JsonBindings
+namespace Kimanju.PlacesApi.JsonBindings
 {
   public class Location
   {

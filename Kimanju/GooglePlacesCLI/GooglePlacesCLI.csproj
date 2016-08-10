@@ -7,8 +7,8 @@
     <ProjectGuid>{0DD0078F-FE1A-457C-84B4-24166575F334}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GooglePlacesCLI</RootNamespace>
-    <AssemblyName>GooglePlacesCLI</AssemblyName>
+    <RootNamespace>Kimanju.GooglePlacesCLI</RootNamespace>
+    <AssemblyName>Kimanju.GooglePlacesCLI</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
