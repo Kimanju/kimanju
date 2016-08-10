@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web;
 using Newtonsoft.Json;
 using Kimanju.PlacesApi.JsonBindings;
 
@@ -14,7 +15,7 @@ namespace Kimanju.PlacesApi
   {
     private const String _apiKey = "AIzaSyCkc8aQYKa224YJ2QzjHDn-weGL1r83iIA";
     private const String _apiUrl = "https://maps.googleapis.com/maps/api/place";
-    private const Int32 _defaultSearchRadius = 200;
+    private const Int32 _defaultSearchRadiusMeters = 200;
     private String[] _defaultSearchTypes = { "food", "bar", "restaurant" };
 
 
@@ -26,7 +27,7 @@ namespace Kimanju.PlacesApi
       }
     }
 
-    public async Task<IEnumerable<Place>> GetMapData(Coordinates position)
+    public async Task<IEnumerable<Place>> NearbySearch(Coordinates position, String keyword)
     {
       List<Place> places = new List<Place>();
       PlacesApiQueryResponse apiResponse = null;
@@ -34,7 +35,9 @@ namespace Kimanju.PlacesApi
       {
         var coords = position.Latitude.ToString(CultureInfo.CreateSpecificCulture("en-US")) + "," + position.Longitude.ToString(CultureInfo.CreateSpecificCulture("en-US"));
         var types = String.Join("|", _defaultSearchTypes);
-        var query = $"/nearbysearch/json?location={coords}&radius={_defaultSearchRadius}&types={types}";
+        var query = $"/nearbysearch/json?location={coords}&radius={_defaultSearchRadiusMeters}&types={types}";
+        if (!String.IsNullOrEmpty(keyword))
+          query += "&keyword=" + Uri.EscapeDataString(keyword);
         if (!String.IsNullOrEmpty(apiResponse?.next_page_token))
           query += "&pagetoken=" + apiResponse.next_page_token;
         var response = await GetDataFromGoogle(query);
@@ -70,7 +73,7 @@ namespace Kimanju.PlacesApi
       if (result.result == null)
         throw new ArgumentOutOfRangeException(nameof(placeId), placeId, "Can't find the details of this place.");
 
-      return new PlaceDetails()
+      return new PlaceDetails
       {
         PlaceId = result.result.place_id,
         Rating = result.result.rating,

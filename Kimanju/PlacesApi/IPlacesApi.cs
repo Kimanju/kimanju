@@ -6,7 +6,7 @@ namespace Kimanju.PlacesApi
 {
     public interface IPlacesApi
     {
-      Task<IEnumerable<Place>> GetMapData(Coordinates position);
+      Task<IEnumerable<Place>> NearbySearch(Coordinates position, String keyword);
       Task<PlaceDetails> GetPlaceDetails(String placeId);
     }
 }

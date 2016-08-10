@@ -11,6 +11,9 @@ namespace Kimanju.GooglePlacesCLI
     {
       Task.Run(async () =>
       {
+        Console.Write("Quoi ? : ");
+        var keyword = Console.ReadLine();
+
         IPlacesApi gapi = new GooglePlacesApi();
 
         var ici = new Coordinates
@@ -19,10 +22,10 @@ namespace Kimanju.GooglePlacesCLI
           Longitude = 2.343365
         };
         
-        var restoPasLoins = await gapi.GetMapData(ici);
+        var restoPasLoins = await gapi.NearbySearch(ici, keyword);
         var restos = restoPasLoins as Place[] ?? restoPasLoins.ToArray();
 
-        Console.WriteLine(restos.Length);
+        Console.WriteLine($"Pas loin de \"{keyword}\", il y a {restos.Length} lieux :");
 
         foreach (var resto in restos)
         {
