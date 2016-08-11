@@ -51,11 +51,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DocumentDBRepository.cs" />
-    <Compile Include="IKimanjuDocument.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Models\Models.csproj">
+      <Project>{8CEA519F-B46A-4709-9A5A-19FFF6761A6C}</Project>
+      <Name>Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Azure.DocumentDB.1.9.2\build\Microsoft.Azure.DocumentDB.targets" Condition="Exists('..\packages\Microsoft.Azure.DocumentDB.1.9.2\build\Microsoft.Azure.DocumentDB.targets')" />

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
 using System.Threading.Tasks;
+using Kimanju.Models;
 using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;
 using Microsoft.Azure.Documents.Linq;
@@ -12,11 +13,11 @@ namespace Kimanju.DataAccess
 {
   public class DocumentDBRepository
   {
-    public DocumentClient Client { get; set; }
+    public DocumentClient Client { get; }
 
-    public DocumentDBRepository(Uri endPoint, String primaryKey)
+    public DocumentDBRepository(Uri endpoint, String authKey)
     {
-      Client = new DocumentClient(endPoint, primaryKey);
+      Client = new DocumentClient(endpoint, authKey);
     }
 
     public async Task CreateDatabaseIfNotExists(String databaseName)
@@ -41,6 +42,8 @@ namespace Kimanju.DataAccess
 
     public async Task CreateDocumentCollectionIfNotExists(String databaseName, String collectionName)
     {
+      await CreateDatabaseIfNotExists(databaseName);
+
       try
       {
         await Client.ReadDocumentCollectionAsync(UriFactory.CreateDocumentCollectionUri(databaseName, collectionName));
@@ -72,9 +75,12 @@ namespace Kimanju.DataAccess
 
     public async Task CreateKimanjuDocumentIfNotExists(String databaseName, String collectionName, IKimanjuDocument document)
     {
+      await CreateDatabaseIfNotExists(databaseName);
+      await CreateDocumentCollectionIfNotExists(databaseName, collectionName);
+
       try
       {
-        await Client.ReadDocumentAsync(UriFactory.CreateDocumentUri(databaseName, collectionName, document.Id));
+        await Client.ReadDocumentAsync(UriFactory.CreateDocumentUri(databaseName, collectionName, IdToString(document.Id)));
       }
       catch (DocumentClientException de)
       {
@@ -89,12 +95,14 @@ namespace Kimanju.DataAccess
       }
     }
 
-    public async Task<IKimanjuDocument> GetItemAsync(String databaseName, String collectionName, String id)
+    public async Task<T> GetItemAsync<T>(String databaseName, String collectionName, Guid id)
+      where T : class, IKimanjuDocument
     {
       try
       {
-        Document document = await Client.ReadDocumentAsync(UriFactory.CreateDocumentUri(databaseName, collectionName, id));
-        return (IKimanjuDocument)document;
+        var response = await Client.ReadDocumentAsync(UriFactory.CreateDocumentUri(databaseName, collectionName, IdToString(id)));
+        var result = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(response.Resource.ToString());
+        return result;
       }
       catch (DocumentClientException e)
       {
@@ -124,6 +132,11 @@ namespace Kimanju.DataAccess
       }
 
       return results;
+    }
+
+    private static String IdToString(Guid id)
+    {
+      return id.ToString("D");
     }
   }
 }
